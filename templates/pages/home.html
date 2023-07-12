@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mx-auto">
+        <h1 class="text-4xl font-bold text-center mt-8">My name is Klaas Moukangwe</h1>
+        <h2 class="text-2xl text-center mt-4">A Django Developer</h2>
+        
+        <div class="container mx-auto justify-center mt-8 w-1/2">
+            <ul class="gap-4">
+                <li class="p-4 bg-gray-100 rounded shadow">
+                    <h3 class="text-lg font-bold mb-2">Skills:</h3>
+                    <div class="mb-1 text-base font-medium dark:text-white">Python Django</div>
+                    <div class="w-full bg-gray-200 h-2 mb-4 dark:bg-gray-700">
+                      <div class="bg-sky-400 h-1.5 rounded-full dark:bg-sky-500" style="width: 80%"></div>
+                    </div>
+                    <div class="mb-1 text-base font-medium dark:text-white">HTML/CSS Bootstrap and Tailwind</div>
+                    <div class="w-full bg-gray-200 h-2 mb-4 dark:bg-gray-700">
+                      <div class="bg-sky-400 h-1.5 rounded-full dark:bg-sky-500" style="width: 80%"></div>
+                    </div>
+                    <div class="mb-1 text-base font-medium dark:text-white">Vuejs</div>
+                    <div class="w-full bg-gray-200 h-2 mb-4 dark:bg-gray-700">
+                      <div class="bg-sky-400 h-1.5 rounded-full dark:bg-sky-500" style="width: 50%"></div>
+                    </div>
+        </div>
+        
+        <h3 class="text-3xl font-bold mt-8 mb-4">My Projects</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Projects using a loop -->
+            {% for project in projects %}
+            <div class="bg-white rounded shadow p-4">
+                <h4 class="text-xl font-bold mb-2">{{ project.title }}</h4>
+                <p class="text-gray-600">{{ project.description }}</p>
+                <a href="{{ project.get_absolute_url }}" class="text-sky-500 hover:underline">Learn More</a>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <h3 class="text-3xl font-bold mt-8 mb-4">My Blog</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Display blog posts using a loop -->
+            {% for post in blog_posts %}
+            <div class="bg-white rounded shadow p-4">
+                <h4 class="text-xl font-bold mb-2">{{ post.title }}</h4>
+                <p class="text-gray-600">{{ post.get_excerpt }}</p>
+                <a href="{{ post.get_absolute_url }}" class="text-sky-500 hover:underline">Read More</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            menuOpen: false,
+        },
+        methods: {
+            toggleMenu() {
+                this.menuOpen = !this.menuOpen;
+            },
+        },
+    });
+</script>

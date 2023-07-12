@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-4">Portfolio</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {% for project in projects %}
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <img src="{{ project.featured_image.url }}" alt="{{ project.title }}" class="w-full mb-4">
+                <h2 class="text-xl font-bold">{{ project.title }}</h2>
+                <p>{{ project.description }}</p>
+                <a href="{{ project.get_absolute_url }}" class="text-blue-500 hover:underline">Read more</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

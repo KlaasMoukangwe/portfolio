@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="text-3xl font-bold mb-8 text-center">Contact Me</h1>
+    <div id="contact-form" class="flex justify-center items-center h-50">
+        <form @submit.prevent="submitForm" class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                <input type="text" id="name" v-model="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                <input type="email" id="email" v-model="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-6">
+                <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message:</label>
+                <textarea id="message" v-model="message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+            </div>
+        </form>
+
+        <div v-if="successMessage" class="success-popup text-center bg-green-200 text-green-800 p-2 rounded mt-4">
+            {{ successMessage }}
+        </div>
+
+        <div v-if="errorMessage" class="error-popup text-center bg-red-200 text-red-800 p-2 rounded mt-4">
+            {{ errorMessage }}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#contact-form',
+            data: {
+                successMessage: '',
+                errorMessage: '',
+                name: '',
+                email: '',
+                message: ''
+            },
+            methods: {
+                submitForm() {
+                    // Get the CSRF token
+                    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+                    // Make an AJAX request to submit the form data
+                    axios.post('/contact/', {
+                        name: this.name,
+                        email: this.email,
+                        message: this.message
+                    }, {
+                        headers: {
+                            'X-CSRFToken': csrfToken
+                        }
+                    })
+                    .then(response => {
+                        if (response.data.success) {
+                            // Show success message
+                            this.successMessage = response.data.message;
+                            this.errorMessage = '';
+                        } else {
+                            // Show error message
+                            this.successMessage = '';
+                            this.errorMessage = 'Form submission failed. Please try again.';
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        this.successMessage = '';
+                        this.errorMessage = 'An error occurred. Please try again.';
+                    });
+                }
+            }
+        });
+    </script>
+{% endblock %}

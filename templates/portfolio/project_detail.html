@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <article>
+        <h1 class="text-3xl font-bold">{{ project.title }}</h1>
+        <p class="text-gray-500">Posted on {{ project.created_at }}</p>
+        <img src="{{ project.featured_image.url }}" alt="{{ project.title }}" class="w-full my-4">
+        <div class="prose">
+            {{ project.description|safe }}
+        </div>
+        <div>
+            <h2 class="text-xl font-bold">Project Details:</h2>
+            <ul>
+                <li><strong>Client:</strong> {{ project.client_name }}</li>
+                <li><strong>Date:</strong> {{ project.project_date }}</li>
+                <li><strong>Skills:</strong> {{ project.skills_used }}</li>
+                {% if project.project_url %}
+                    <li><strong>Project URL:</strong> <a href="{{ project.project_url }}" target="_blank">{{ project.project_url }}</a></li>
+                {% endif %}
+                {% if project.github_url %}
+                    <li><strong>GitHub URL:</strong> <a href="{{ project.github_url }}" target="_blank">{{ project.github_url }}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </article>
+{% endblock %}

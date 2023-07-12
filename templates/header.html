@@ -1,0 +1,39 @@
+<nav class="bg-blue-950 py-4">
+    <div class="container mx-auto flex items-center justify-between">
+        <a href="{% url 'pages:home' %}" class="text-white font-bold text-lg">Klaas Moukangwe</a>
+        <button id="menu-toggle" class="text-white focus:outline-none lg:hidden" @click="toggleMenu">
+            <svg class="h-6 w-6" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
+            </svg>
+        </button>
+        <div id="menu" class="hidden lg:flex space-x-4" :class="{ 'hidden': !menuOpen }">
+            <a href="{% url 'pages:contact' %}" class="text-white">Contact</a>
+            <a href="{% url 'blog:post-list' %}" class="text-white">Blog</a>
+            <a href="{% url 'portfolio:project-list' %}" class="text-white">Portfolio</a>
+        </div>
+    </div>
+</nav>
+
+<style>
+    /* Hide the menu by default on mobile */
+    #menu {
+        display: none;
+    }
+
+    /* Show the menu when the toggle button is clicked on mobile */
+    #menu.hidden {
+        display: flex;
+    }
+
+    /* Show the toggle button only on mobile */
+    #menu-toggle {
+        display: none;
+    }
+
+    /* Show the toggle button when the screen width is less than 1024px */
+    @media (max-width: 1023px) {
+        #menu-toggle {
+            display: block;
+        }
+    }
+</style>

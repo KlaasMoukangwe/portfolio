@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klaas Moukangwe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #app {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Include the header navigation -->
+    {% include 'header.html' %}
+
+    <div id="app" class="container mx-auto py-8">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Include the footer -->
+    {% include 'footer.html' %}
+
+    <!-- Include Vue.js for menu toggle functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            new Vue({
+                el: '#app',
+                data: {
+                    menuOpen: false,
+                },
+                methods: {
+                    toggleMenu() {
+                        this.menuOpen = !this.menuOpen;
+                    },
+                },
+            });
+        });
+    </script>
+</body>
+</html>
